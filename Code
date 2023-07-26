@@ -1,0 +1,103 @@
+string[] InputUserDataInArray() // Функция создания массива строк, наполнение задается пользователем с консоли
+{
+    Console.WriteLine("");
+
+    Console.Write("Please, input your data values (!!! Separate it by commas!!!)");
+
+    Console.WriteLine("");
+
+    string str = Console.ReadLine()!;
+    string[] strSep = str.Split(',');
+
+    string[] result = new string[strSep.Length];
+
+    for (int i = 0; i < strSep.Length; i++)
+    {
+        string temp = strSep[i].Trim();
+
+        result[i] = temp;
+
+    }
+
+    return result;
+}
+
+void PrintArray(string[] arr) // Функция вывода массива в консоль через запятую
+{
+    int count = arr.Length;
+    int position = 0;
+    while (position < count)
+    {
+
+        Console.Write(arr[position]);
+
+        if (position != count - 1)
+            Console.Write(", ");
+        position++;
+    }
+    Console.WriteLine();
+}
+
+string[] ReturnValuesVith3Symbols(string[] input) // Функция возврата нового массива, заполненного значениями <= 3
+{
+    int count = 0;
+
+    for (int i = 0; i < input.Length; i++) // Счетчик количества элементов, удовлетворяющих условию
+    {
+        if (input[i].Length <= 3)
+            count++;
+    }
+
+    if (count == 0)
+    {
+        string[] result = new string[1]; // Присвоение значения в единственный эл-т массива, если нет удовлетворяющих элементов
+        result[0] = "no_rezult";
+        return result;
+
+    }
+    else
+    {
+        string[] result = new string[count]; // Создание массива с размерностью количества нужных элементов
+        int indexResult = 0;
+
+        for (int i = 0; i < input.Length; i++) // Заполнение массива нужными элементами
+        {
+            if (input[i].Length <= 3)
+            {
+                result[indexResult] = input[i];
+                indexResult++;
+            }
+        }
+        return result;
+    }
+}
+
+// Стартовое сообщение
+Console.WriteLine("");
+Console.WriteLine("This program will accept as input the values you specify, and will display all values whose size is less than three or equal to three.");
+
+// Объявление и заполнение массива элементами пользователя
+string[] array = InputUserDataInArray();
+
+// Объявление и заполнение нового массива результатами работы основной функции
+string[] result = ReturnValuesVith3Symbols(array);
+
+// Вывод результата в консоль
+if (result[0] == "no_rezult") // Вывод красного сообщения, что элементов, удовлетворяющих условию не найдено
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("");
+    Console.WriteLine("There is no values whose size is less than three or equal to three!");
+    Console.ResetColor();
+    Console.WriteLine("");
+}
+else // Вывод зеленого сообщения с массивом элементов, соответствующих условию
+{
+    Console.WriteLine("");
+    Console.WriteLine("The values whose size is less than three or equal to three is:");
+    Console.WriteLine("");
+    Console.ForegroundColor = ConsoleColor.Green;
+    PrintArray(result);
+    Console.ResetColor();
+    Console.WriteLine("");
+}
